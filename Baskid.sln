@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskid.Console", "src\Baskid.Console\Baskid.Console.csproj", "{293E9D2E-BB41-4C1C-B134-FB986360062A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskid", "src\Baskid\Baskid.csproj", "{293E9D2E-BB41-4C1C-B134-FB986360062A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0ACC0B84-110A-4FF0-A8A7-5DB0263B4FBD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskid.Tests", "src\Baskid.Tests\Baskid.Tests.csproj", "{3092EAF6-3C40-46F1-87B2-CB06542ABD8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{64A2AC68-D273-4D00-93E2-03FCA585F8D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Baskid.Module.Core", "src\Baskid.Module.Core\Baskid.Module.Core.csproj", "{536A523C-4ACB-457C-9F14-995771AF7ACF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Baskid.Core", "src\Baskid.Core\Baskid.Core.csproj", "{FCDE99DB-C80E-48D8-A39D-4CEE951B088A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +25,27 @@ Global
 		{293E9D2E-BB41-4C1C-B134-FB986360062A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{293E9D2E-BB41-4C1C-B134-FB986360062A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{293E9D2E-BB41-4C1C-B134-FB986360062A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3092EAF6-3C40-46F1-87B2-CB06542ABD8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3092EAF6-3C40-46F1-87B2-CB06542ABD8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3092EAF6-3C40-46F1-87B2-CB06542ABD8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3092EAF6-3C40-46F1-87B2-CB06542ABD8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{536A523C-4ACB-457C-9F14-995771AF7ACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{536A523C-4ACB-457C-9F14-995771AF7ACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{536A523C-4ACB-457C-9F14-995771AF7ACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{536A523C-4ACB-457C-9F14-995771AF7ACF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCDE99DB-C80E-48D8-A39D-4CEE951B088A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCDE99DB-C80E-48D8-A39D-4CEE951B088A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCDE99DB-C80E-48D8-A39D-4CEE951B088A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCDE99DB-C80E-48D8-A39D-4CEE951B088A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{293E9D2E-BB41-4C1C-B134-FB986360062A} = {0ACC0B84-110A-4FF0-A8A7-5DB0263B4FBD}
+		{3092EAF6-3C40-46F1-87B2-CB06542ABD8E} = {64A2AC68-D273-4D00-93E2-03FCA585F8D9}
+		{536A523C-4ACB-457C-9F14-995771AF7ACF} = {0ACC0B84-110A-4FF0-A8A7-5DB0263B4FBD}
+		{FCDE99DB-C80E-48D8-A39D-4CEE951B088A} = {0ACC0B84-110A-4FF0-A8A7-5DB0263B4FBD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1AA014A2-5489-42EC-8F8B-A5F0D56833EB}
