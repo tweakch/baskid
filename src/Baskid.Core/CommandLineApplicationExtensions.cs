@@ -13,5 +13,13 @@ namespace Baskid.Core
                 app.Command(command.Key, command.Value);
             }
         }
+        public static void AddModule(this CommandLineApplication app, ABaskidModule module)
+        {
+            foreach (var command in module.Commands)
+            {
+                app.Command(command.Key, command.Value);
+            }
+        }
+
     }
 }

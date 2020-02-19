@@ -10,6 +10,7 @@
     <Company>tweakch</Company>
     <PackageDescription>This package is the baskid CLI!</PackageDescription>
     <RepositoryUrl>https://github.com/tweakch/baskid</RepositoryUrl>
+    <Configurations>Debug;Release;Init</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

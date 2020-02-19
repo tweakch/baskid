@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskid.Tests", "src\Baskid.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{64A2AC68-D273-4D00-93E2-03FCA585F8D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Baskid.Module.Core", "src\Baskid.Module.Core\Baskid.Module.Core.csproj", "{536A523C-4ACB-457C-9F14-995771AF7ACF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskid.Module.Core", "src\Baskid.Module.Core\Baskid.Module.Core.csproj", "{536A523C-4ACB-457C-9F14-995771AF7ACF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Baskid.Core", "src\Baskid.Core\Baskid.Core.csproj", "{FCDE99DB-C80E-48D8-A39D-4CEE951B088A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baskid.Core", "src\Baskid.Core\Baskid.Core.csproj", "{FCDE99DB-C80E-48D8-A39D-4CEE951B088A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
