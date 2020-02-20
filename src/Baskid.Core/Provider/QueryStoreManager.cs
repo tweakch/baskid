@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Baskid.Core.Models;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Baskid.Core.Provider
@@ -12,10 +13,16 @@ namespace Baskid.Core.Provider
     {
         private readonly BaskidContext _context;
         
+
         public QueryStoreManager(BaskidContext context)
         {
             HashName = "MD5";
             _context = context;
+        }
+
+        public BaskidContext Context
+        {
+            get { return _context; }
         }
 
         public string HashName { get; set; }
@@ -29,6 +36,38 @@ namespace Baskid.Core.Provider
             return guid;
         }
 
+        public Guid Add(IEnumerable<string> searchString)
+        {
+            var guid = Guid.NewGuid();
+            Add(guid, searchString);
+            return guid;
+        }
+
+        public void Add(Guid id, IEnumerable<string> searchString)
+        {
+            var query = new Query { Id = id, SearchString = null };
+            var queryEntries = new List<QueryEntry>();
+
+            foreach (var value in searchString.Distinct())
+            {
+                var hash = value.ToHash(HashName);
+
+                var entry = Context.SearchEntries.Find(hash);
+                if (entry == null)
+                {
+                    entry = new Entry { Id = hash, Value = value };
+                    _context.SearchEntries.Add(entry);
+                }
+
+                var queryEntry = new QueryEntry { Entry = entry, Query = query };
+                queryEntries.Add(queryEntry);
+            }
+
+            query.Entries = queryEntries;
+            _context.SearchQueries.Add(query);
+            if (IsSet(ContextAction.Add)) _context.SaveChanges();
+        }
+
         public void Add(Guid id, string searchString)
         {
             var query = new Query {Id = id, SearchString = searchString};
@@ -39,22 +78,35 @@ namespace Baskid.Core.Provider
             
             foreach (var value in entries.Distinct())
             {
-                var entry = AddQueryEntry(value, query, queryEntries);
-                _context.SearchEntries.Add(entry);
+                var hash = value.ToHash(HashName);
+
+                var entry = Context.SearchEntries.Find(hash);
+                if (entry == null)
+                {
+                    entry = new Entry {Id = hash, Value = value};
+                    _context.SearchEntries.Add(entry);
+                }
+
+                var queryEntry = new QueryEntry { Entry = entry, Query = query };
+                queryEntries.Add(queryEntry);
             }
 
             query.Entries = queryEntries;
-            
             _context.SearchQueries.Add(query);
             if (IsSet(ContextAction.Add)) _context.SaveChanges();
         }
 
-        private Entry AddQueryEntry(string searchString, Query query, List<QueryEntry> queryEntries)
+        public void Reference(Entry entry, string hash)
         {
-            var entry = new Entry {Id = searchString.ToHash(HashName), Value = searchString};
-            var queryEntry = new QueryEntry {Entry = entry, Query = query};
-            queryEntries.Add(queryEntry);
-            return entry;
+            _context.EntryReferences.Add(new EntryReference() { });
+        }
+
+        public IEnumerable<Entry> Entries
+        {
+            get
+            {
+                return _context.SearchEntries;
+            }
         }
 
         private bool IsSet(ContextAction contextAction)

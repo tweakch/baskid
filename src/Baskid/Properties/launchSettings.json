@@ -14,6 +14,14 @@
     "baskid add -?": {
       "commandName": "Project",
       "commandLineArgs": "add -?"
+    },
+    "baskid add --all": {
+      "commandName": "Project",
+      "commandLineArgs": "add --all"
+    },
+    "baskid build": {
+      "commandName": "Project",
+      "commandLineArgs": "build"
     }
   }
 }
