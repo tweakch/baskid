@@ -1,72 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json;
-using System.Threading.Tasks;
+using System.IO;
 using Baskid.Core;
 using Baskid.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.Extensions.Logging;
 
 namespace Baskid
 {
-    class Program
+    internal class Program
     {
-        private static readonly HttpClient client = new HttpClient();
-
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var serviceProvider = new ServiceCollection()
-            .AddLogging()
-            .AddDbContext<BaskidContext>(options => options.UseSqlite("DataSource=:memory:"))
-            .AddBaskid()
-            .BuildServiceProvider();
-            
+            var serviceProvider = RegisterServices(args);
             var baskid = serviceProvider.GetService<CommandLineApplication>();
 
-            baskid.Command("get", command =>
-            {
-                var urlArgument = command.Argument("[url]", "the url to get data from");
-                command.OnExecute(async () =>
-                {
-                    var repositories = await ProcessRepositories(urlArgument.Value);
-                    foreach (var repo in repositories)
-                    {
-                        Console.WriteLine(repo.Name);
-                        Console.WriteLine(repo.Description);
-                        Console.WriteLine(repo.GitHubHomeUrl);
-                        Console.WriteLine(repo.Homepage);
-                        Console.WriteLine(repo.Watchers);
-                        Console.WriteLine(repo.LastPush);
-                        Console.WriteLine();
-                    }
-                    return 0;
-                });
-            });
-
+            ILogger logger = serviceProvider.GetService<ILogger<Program>>();
             try
             {
                 baskid.Execute(args);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 Console.Error.WriteLine(e.Message);
+                logger.LogError(e.Message);
+            }
+            finally
+            {
+                serviceProvider.Dispose();
             }
         }
 
-        private static async Task<List<Repository>> ProcessRepositories(string url = "https://api.github.com/orgs/dotnet/repos")
+        private static ServiceProvider RegisterServices(string[] args)
         {
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+            //var configuration = new ConfigurationBuilder();
+            //Configuration = configuration.SetBasePath(Directory.GetCurrentDirectory())
+            //                             .AddJsonFile("appsettings.json", false, true)
+            //                             .AddCommandLine(args)
+            //                             .Build();
 
-            var streamTask = client.GetStreamAsync(url);
-            var repositories = await JsonSerializer.DeserializeAsync<List<Repository>>(await streamTask);
-            return repositories;
+            var services = new ServiceCollection();
+            return services.AddDbContext<BaskidContext>(options =>
+                           {
+                               options.UseSqlite("DataSource=.baskid\\data");
+                           })
+                           .AddBaskid()
+                           .AddLogging(cfg =>
+                           {
+                               //cfg.AddConfiguration(configuration);
+                               //cfg.SetMinimumLevel(LogLevel.Debug);
+                           })
+                           .BuildServiceProvider();
         }
     }
 }

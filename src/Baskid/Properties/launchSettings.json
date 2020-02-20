@@ -1,0 +1,27 @@
+{
+  "profiles": {
+    "Baskid": {
+      "commandName": "Project"
+    },
+    "baskid init": {
+      "commandName": "Project",
+      "commandLineArgs": "init"
+    },
+    "baskid status": {
+      "commandName": "Project",
+      "commandLineArgs": "status"
+    },
+    "baskid add -?": {
+      "commandName": "Project",
+      "commandLineArgs": "add -?"
+    },
+    "baskid add --all": {
+      "commandName": "Project",
+      "commandLineArgs": "add --all"
+    },
+    "baskid build": {
+      "commandName": "Project",
+      "commandLineArgs": "build"
+    }
+  }
+}
